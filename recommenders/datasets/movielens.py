@@ -9,7 +9,7 @@ import pandas as pd
 
 class MovieLens:
     """
-
+    Initialize MovieLens dataset
     """
     urls = {
         "ml-100K" : "https://files.grouplens.org/datasets/movielens/ml-100k.zip",
@@ -107,4 +107,4 @@ class MovieLens:
 
     
 if __name__=="__main__":
-    MovieLens("ml-100K")
+    movielens = MovieLens("ml-100K")
