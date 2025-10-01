@@ -11,7 +11,7 @@ def rmse(rating_true, rating_pred):
     Returns:
         float: The RMSE value.
     """
-    return np.sqrt(np.mean((rating_true, rating_pred)**2))
+    return np.sqrt(np.mean(np.pow((rating_true - rating_pred), 2)))
 
 def mse(rating_true, rating_pred):
     """
@@ -24,7 +24,7 @@ def mse(rating_true, rating_pred):
     Returns:
         float: The MSE value.
     """
-    return np.mean((rating_true - rating_pred)**2)
+    return np.mean(np.pow((rating_true - rating_pred), 2))
 
 def mae(rating_true, rating_pred):
     """
