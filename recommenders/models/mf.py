@@ -99,10 +99,11 @@ class MF:
             list: List of (item_id, predicted_rating) tuples, sorted by rating.
         """
         recommendations = []
-        user = self.users_map[user_id]
-        for item in self.items:
-            recommendations.append(np.dot(self.U[user], self.I[item]))
-        recommendations.sort(reverse=True)
+        user_id = self.users_map[user_id]
+        for item_id in self.items:
+            rating_pred = np.dot(self.U[user_id], self.I[item_id])
+            recommendations.append((item_id, rating_pred))
+        recommendations.sort(key=lambda x: x[1], reverse=True)
         return recommendations[:k]
     def evaluate(self, R):
         """
