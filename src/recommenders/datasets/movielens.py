@@ -12,7 +12,7 @@ class MovieLens:
     Initialize MovieLens dataset
     """
     urls = {
-        "ml-100K" : "https://files.grouplens.org/datasets/movielens/ml-100k.zip",
+        "ml-latest-small" : "", 
         "ml-1M"   : "https://files.grouplens.org/datasets/movielens/ml-1m.zip",
         "ml-10M"  : "https://files.grouplens.org/datasets/movielens/ml-10m.zip",
         "ml-20M"  : "https://files.grouplens.org/datasets/movielens/ml-20m.zip",

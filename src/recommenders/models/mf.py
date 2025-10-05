@@ -1,4 +1,7 @@
 import numpy as np
+import pandas as pd
+from recommenders.evaluation.regression_metrics import rmse,mse,mae
+
 
 class MF:
     def __init__(self, k, epochs, lr):
@@ -68,7 +71,7 @@ class MF:
 
             loss /= observed_ratings
             loss_history.append(loss)
-            print(f"{epoch=}\n{loss=:.4f}")
+            print(f"{epoch=}: {loss=:.4f}")
         self.U = U
         self.I = I
         return loss_history
@@ -84,7 +87,9 @@ class MF:
         Returns:
             float: Predicted rating.
         """
-        i, j = self.users_map[user_id], self.items_map[item_id]
+        i, j = self.users_map.get(user_id, None), self.items_map.get(item_id, None)
+        if not i or not j:
+            return 0
         return np.dot(self.U[i], self.I[j])
 
     def recommend(self, user_id, k):
@@ -105,6 +110,7 @@ class MF:
             recommendations.append((item_id, rating_pred))
         recommendations.sort(key=lambda x: x[1], reverse=True)
         return recommendations[:k]
+    
     def evaluate(self, R):
         """
         Evaluate the model on test data using RMSE.
@@ -115,13 +121,20 @@ class MF:
         Returns:
             float: Root Mean Squared Error (RMSE).
         """
-        mse = 0
-        n_samples = len(R)
-        for user_id, item_id, rating, *_ in R:
-            error = rating - self.predict(user_id, item_id)
-            mse += error**2
-        rmse = np.sqrt(mse / n_samples)
-        return rmse
-    
+        rating_true = np.empty(len(R))
+        rating_pred = np.empty(len(R))
+        for idx, (user_id, item_id, rating, *_) in enumerate(R):
+            rating_true[idx] = rating
+            rating_pred[idx] = self.predict(int(user_id), int(item_id))
+
+        results = pd.DataFrame(
+            {
+                "rmse" : rmse(rating_true, rating_pred),
+                "mse"  : mse(rating_true, rating_pred),
+                "mae"  : mae(rating_true, rating_pred)
+            },
+            index = ["MF"]
+        )
+        return results
 if __name__ == "__main__":
     pass
