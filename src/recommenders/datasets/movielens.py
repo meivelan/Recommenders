@@ -12,7 +12,7 @@ class MovieLens:
     Initialize MovieLens dataset
     """
     urls = {
-        "ml-latest-small" : "", 
+        "ml-latest-small" : "https://files.grouplens.org/datasets/movielens/ml-latest-small.zip", 
         "ml-1M"   : "https://files.grouplens.org/datasets/movielens/ml-1m.zip",
         "ml-10M"  : "https://files.grouplens.org/datasets/movielens/ml-10m.zip",
         "ml-20M"  : "https://files.grouplens.org/datasets/movielens/ml-20m.zip",
@@ -23,7 +23,7 @@ class MovieLens:
         Intialize the MovieLens dataset with specified version.
 
         Parameters:
-        dataset_name : name of the dataset ("ml-100K" or "ml-1M" or ml-10M" or "ml-20M" or "ml-25M")
+        dataset_name : name of the dataset ("ml-latest-small" or "ml-1M" or ml-10M" or "ml-20M" or "ml-25M")
         """
         self.dataset_name = dataset_name
         self.url = MovieLens.urls[self.dataset_name]
@@ -107,4 +107,4 @@ class MovieLens:
 
     
 if __name__=="__main__":
-    movielens = MovieLens("ml-100K")
+    movielens = MovieLens("ml-latest-small")
